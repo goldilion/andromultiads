@@ -1,0 +1,3 @@
+rootProject.name = "AndroMultiAdsNetworks"
+include ':app'
+include ':AndroMultiAds'
