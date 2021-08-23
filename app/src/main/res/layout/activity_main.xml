@@ -42,14 +42,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:onClick="munculiklan"
+            android:onClick="showads"
             android:text="Show Intertitial" />
 
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="munculreward"
+            android:onClick="showreward"
             android:text="Show Reward" />
 
         <RelativeLayout

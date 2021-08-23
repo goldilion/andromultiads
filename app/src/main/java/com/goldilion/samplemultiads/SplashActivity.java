@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.goldilion.multiads.AndroAdsOpenAds;
 import com.goldilion.multiads.AndroAdsInitialize;
 
-
 public class SplashActivity extends AppCompatActivity {
     private static final int REQUEST = 112;
 

@@ -17,9 +17,9 @@ public class SettingAds {
     public static String NATIVE_ADS_ADMOB ="ca-app-pub-3940256099942544/2247696110";
     public static String INITIALIZE_SDK = "107355779";
 
-    public static String HIGH_PAYING_KEYWORD1="Insurance";
-    public static String HIGH_PAYING_KEYWORD2="Loans";
-    public static String HIGH_PAYING_KEYWORD3="Mortgage";
-    public static String HIGH_PAYING_KEYWORD4="Attorney";
-    public static String HIGH_PAYING_KEYWORD5="";
+    public static String HPK1="Insurance";
+    public static String HPK2="Loans";
+    public static String HPK3="Mortgage";
+    public static String HPK4="Attorney";
+    public static String HPK5="";
 }
