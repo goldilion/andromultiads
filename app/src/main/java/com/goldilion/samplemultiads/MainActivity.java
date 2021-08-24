@@ -1,14 +1,17 @@
 package com.goldilion.samplemultiads;
 
+import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS;
+import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_BANNER;
+import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_INTERTITIAL;
 import static com.goldilion.samplemultiads.SettingAds.HPK1;
 import static com.goldilion.samplemultiads.SettingAds.HPK2;
 import static com.goldilion.samplemultiads.SettingAds.HPK3;
 import static com.goldilion.samplemultiads.SettingAds.HPK4;
 import static com.goldilion.samplemultiads.SettingAds.HPK5;
-import static com.goldilion.samplemultiads.SettingAds.INITIALIZE_SDK;
+import static com.goldilion.samplemultiads.SettingAds.INTERVAL;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_BANNER;
+import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_INTERTITIAL;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_REWARDS;
-import static com.goldilion.samplemultiads.SettingAds.NATIVE_ADS_ADMOB;
 import static com.goldilion.samplemultiads.SettingAds.SELECT_ADS;
 
 import android.os.Bundle;
@@ -38,23 +41,45 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout nativeads = findViewById(R.id.laynative);
         RelativeLayout layAdsmall = findViewById(R.id.laysAdsmall);
         AndroGDPR.loadGdpr(MainActivity.this,SELECT_ADS,true);
-        AndroAdsInitialize.SelectAds(MainActivity.this, SettingAds.SELECT_ADS, INITIALIZE_SDK);
-        AndroAdsBanner.MediumBanner(MainActivity.this, layAds,SettingAds.SELECT_ADS, SettingAds.MAIN_ADS_BANNER,HPK1
-        ,HPK2,HPK3,HPK4,HPK5);
-        AndroAdsBanner.SmallBanner(MainActivity.this, layAdsmall,SettingAds.SELECT_ADS, SettingAds.MAIN_ADS_BANNER,HPK1
-                ,HPK2,HPK3,HPK4,HPK5);
-        AndroAdsIntertitial.LoadIntertitial(MainActivity.this, SettingAds.SELECT_ADS, SettingAds.MAIN_ADS_INTERTITIAL,HPK1
-                ,HPK2,HPK3,HPK4,HPK5 );
-        AndroAdsNative.SmallNativeAdmob(MainActivity.this,SELECT_ADS, SettingAds.BACKUP_ADS, nativeads, NATIVE_ADS_ADMOB,MAIN_ADS_BANNER, HPK1
-                ,HPK2,HPK3,HPK4,HPK5);
-        AndroAdsReward.LoadReward(MainActivity.this, SELECT_ADS, MAIN_ADS_REWARDS );
-        AndroAdsOpenAds.ShowOpen(MainActivity.this);
+
+        switch (SELECT_ADS) {
+            case "ADMOB":
+                AndroAdsBanner.SmallBannerAdmob(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER, HPK1
+                        ,HPK2,HPK3,HPK4,HPK5);
+                AndroAdsIntertitial.LoadIntertitialAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERTITIAL, BACKUP_ADS_INTERTITIAL, HPK1
+                        ,HPK2,HPK3,HPK4,HPK5);
+                AndroAdsOpenAds.ShowOpen(MainActivity.this);
+                break;
+            case "APPLOVIN-M":
+                AndroAdsBanner.SmallBannerApplovinMax(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsIntertitial.LoadIntertitialApplovinMax(MainActivity.this, BACKUP_ADS,MAIN_ADS_INTERTITIAL,BACKUP_ADS_INTERTITIAL);
+                break;
+            case "APPLOVIN-D":
+                AndroAdsBanner.SmallBannerApplovinDis(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsIntertitial.LoadIntertitialApplovinDis(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERTITIAL, BACKUP_ADS_INTERTITIAL);
+                break;
+            case "MOPUB" :
+                AndroAdsBanner.SmallBannerMopub(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                break;
+            case "STARTAPP":
+                AndroAdsBanner.SmallBannerStartApp(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                break;
+        }
     }
 
     public void showads(View view){
-        AndroAdsIntertitial.ShowIntertitial(MainActivity.this,SettingAds.SELECT_ADS,
-                SettingAds.MAIN_ADS_INTERTITIAL, 0,HPK1
-                ,HPK2,HPK3,HPK4,HPK5);
+        switch (SELECT_ADS) {
+            case "ADMOB":
+                AndroAdsIntertitial.ShowIntertitialAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERTITIAL, BACKUP_ADS_INTERTITIAL, INTERVAL,
+                        HPK1,HPK2,HPK3,HPK4,HPK5);
+                break;
+            case "APPLOVIN-D":
+                AndroAdsIntertitial.ShowIntertitialApplovinDis(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERTITIAL, BACKUP_ADS_INTERTITIAL, INTERVAL);
+                break;
+            case "APPLOVIN-M":
+                AndroAdsIntertitial.ShowIntertitialApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERTITIAL, BACKUP_ADS_INTERTITIAL, INTERVAL);
+                break;
+        }
 
     }
 
