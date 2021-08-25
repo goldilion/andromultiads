@@ -184,8 +184,8 @@ public class AndroAdsInitialize {
     }
 
     public static void SelectAdsMopub(Activity activity, String selectAdsBackup, String idInitialize, String idInitializeBackupAds) {
-        Map<String, String> facebookBanner = new HashMap<>();
-        facebookBanner.put("native_banner", "true");
+        //Map<String, String> facebookBanner = new HashMap<>();
+        //facebookBanner.put("native_banner", "true");
         SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
         //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
         MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
@@ -242,8 +242,8 @@ public class AndroAdsInitialize {
                 sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
                 break;
             case "MOPUB":
-                Map<String, String> facebookBanner = new HashMap<>();
-                facebookBanner.put("native_banner", "true");
+                //Map<String, String> facebookBanner = new HashMap<>();
+                //facebookBanner.put("native_banner", "true");
                 SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitializeBackupAds);
                 //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
                 MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
