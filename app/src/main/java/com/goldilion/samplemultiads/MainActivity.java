@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (SELECT_ADS) {
             case "ADMOB":
+                AndroAdsInitialize.SelectAdsAdmob(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK_BACKUPADS);
                 AndroAdsBanner.SmallBannerAdmob(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER, HPK1
                         ,HPK2,HPK3,HPK4,HPK5);
                 AndroAdsInterstitial.LoadInterstitialAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, HPK1
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsReward.LoadRewardAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
             case "APPLOVIN-M":
+                AndroAdsInitialize.SelectAdsApplovinMax(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK_BACKUPADS);
                 AndroAdsBanner.SmallBannerApplovinMax(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsInterstitial.LoadInterstitialApplovinMax(MainActivity.this, BACKUP_ADS,MAIN_ADS_INTERSTITIAL,BACKUP_ADS_INTERSTITIAL);
                 AndroAdsReward.LoadRewardApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsInterstitial.LoadInterstitialApplovinDis(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
                 break;
             case "MOPUB" :
+                AndroAdsInitialize.SelectAdsMopub(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
                 AndroAdsBanner.SmallBannerMopub(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsReward.LoadRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
