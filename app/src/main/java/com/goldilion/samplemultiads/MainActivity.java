@@ -3,6 +3,7 @@ package com.goldilion.samplemultiads;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_BANNER;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_INTERSTITIAL;
+import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_REWARDS;
 import static com.goldilion.samplemultiads.SettingAds.HPK1;
 import static com.goldilion.samplemultiads.SettingAds.HPK2;
 import static com.goldilion.samplemultiads.SettingAds.HPK3;
@@ -13,6 +14,8 @@ import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_BANNER;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_INTERSTITIAL;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_REWARDS;
 import static com.goldilion.samplemultiads.SettingAds.SELECT_ADS;
+import static com.goldilion.samplemultiads.SettingAds.INITIALIZE_SDK;
+import static com.goldilion.samplemultiads.SettingAds.INITIALIZE_SDK_BACKUPADS;
 
 import android.os.Bundle;
 import android.view.View;
@@ -49,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsInterstitial.LoadInterstitialAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, HPK1
                         ,HPK2,HPK3,HPK4,HPK5);
                 AndroAdsOpenAds.ShowOpen(MainActivity.this);
+                AndroAdsReward.LoadRewardAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
             case "APPLOVIN-M":
                 AndroAdsBanner.SmallBannerApplovinMax(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsInterstitial.LoadInterstitialApplovinMax(MainActivity.this, BACKUP_ADS,MAIN_ADS_INTERSTITIAL,BACKUP_ADS_INTERSTITIAL);
+                AndroAdsReward.LoadRewardApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
             case "APPLOVIN-D":
                 AndroAdsBanner.SmallBannerApplovinDis(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
@@ -60,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "MOPUB" :
                 AndroAdsBanner.SmallBannerMopub(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsReward.LoadRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
             case "STARTAPP":
                 AndroAdsBanner.SmallBannerStartApp(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialStartApp(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
                 break;
         }
     }
@@ -79,13 +86,28 @@ public class MainActivity extends AppCompatActivity {
             case "APPLOVIN-M":
                 AndroAdsInterstitial.ShowInterstitialApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
                 break;
+            case "MOPUB" :
+                AndroAdsInterstitial.ShowInterstitialMopub(MainActivity.this,BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
+            case "STARTAPP" :
+                AndroAdsInterstitial.ShowInterstitialStartApp(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
         }
 
     }
 
     public void showreward(View view){
-        AndroAdsReward.ShowReward(MainActivity.this,SELECT_ADS,MAIN_ADS_REWARDS);
-
+        switch (SELECT_ADS) {
+            case "ADMOB":
+                AndroAdsReward.ShowRewardAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "APPLOVIN-M":
+                AndroAdsReward.ShowRewardApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "MOPUB":
+                AndroAdsReward.ShowRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+        }
     }
 
     public void onResume(){
