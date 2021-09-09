@@ -35,7 +35,6 @@ public class AndroAdsInterstitial {
     public static int counter = 0;
     public static AppLovinInterstitialAdDialog interstitialAdlovin;
     public static AppLovinAd loadedAd;
-    public static boolean irininter = false;
     private static StartAppAd startAppAd;
 
     public static void LoadInterstitial(Activity activity, String selectAds, String idInterstitial, String Hpk1,
