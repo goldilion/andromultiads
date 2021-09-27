@@ -65,14 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsBanner.SmallBannerApplovinDis(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsInterstitial.LoadInterstitialApplovinDis(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
                 break;
-            case "MOPUB" :
-                AndroAdsInitialize.SelectAdsMopub(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
-                AndroAdsBanner.SmallBannerMopub(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
-                AndroAdsReward.LoadRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
-                break;
-            case "STARTAPP":
-                AndroAdsBanner.SmallBannerStartApp(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
-                AndroAdsInterstitial.LoadInterstitialStartApp(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
+            case "IRON":
+                AndroAdsBanner.SmallBannerIron(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialIron(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
                 break;
         }
     }
@@ -89,11 +84,8 @@ public class MainActivity extends AppCompatActivity {
             case "APPLOVIN-M":
                 AndroAdsInterstitial.ShowInterstitialApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
                 break;
-            case "MOPUB" :
-                AndroAdsInterstitial.ShowInterstitialMopub(MainActivity.this,BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
-                break;
-            case "STARTAPP" :
-                AndroAdsInterstitial.ShowInterstitialStartApp(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+            case "IRON" :
+                AndroAdsInterstitial.ShowInterstitialIron(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
                 break;
         }
 
@@ -106,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "APPLOVIN-M":
                 AndroAdsReward.ShowRewardApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
-                break;
-            case "MOPUB":
-                AndroAdsReward.ShowRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
                 break;
         }
     }

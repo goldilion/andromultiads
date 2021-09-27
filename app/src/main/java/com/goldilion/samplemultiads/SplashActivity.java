@@ -32,11 +32,8 @@ public class SplashActivity extends AppCompatActivity {
             case "APPLOVIN-M":
                 AndroAdsInitialize.SelectAdsApplovinMax(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK);
                 break;
-            case "MOPUB":
-                AndroAdsInitialize.SelectAdsMopub(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
-                break;
-            case "STARTAPP":
-                AndroAdsInitialize.SelectAdsStartApp(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK,INITIALIZE_SDK_BACKUPADS);
+            case "IRON":
+                AndroAdsInitialize.SelectAdsIron(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
                 break;
         }
 

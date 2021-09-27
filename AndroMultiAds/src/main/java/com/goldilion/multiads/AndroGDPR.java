@@ -10,7 +10,6 @@ import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.FormError;
 import com.google.android.ump.UserMessagingPlatform;
-import com.startapp.sdk.adsbase.StartAppSDK;
 
 public class AndroGDPR {
     public static ConsentInformation consentInformation;
@@ -44,12 +43,6 @@ public class AndroGDPR {
                             }
                         });
 
-                break;
-            case "STARTAPP":
-                StartAppSDK.setUserConsent(activity,
-                        "pas",
-                        System.currentTimeMillis(),
-                        true);
                 break;
             case "APPLOVIN-M":
                 AppLovinPrivacySettings.setHasUserConsent(true, activity);

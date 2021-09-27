@@ -21,13 +21,10 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.mopub.common.MoPubReward;
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubRewardedAdListener;
-import com.mopub.mobileads.MoPubRewardedAds;
-import com.startapp.sdk.adsbase.StartAppAd;
-import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
-import com.startapp.sdk.adsbase.adlisteners.VideoListener;
+import com.ironsource.mediationsdk.IronSource;
+import com.ironsource.mediationsdk.logger.IronSourceError;
+import com.ironsource.mediationsdk.model.Placement;
+import com.ironsource.mediationsdk.sdk.RewardedVideoListener;
 
 import java.util.Map;
 import java.util.Set;
@@ -35,9 +32,7 @@ import java.util.Set;
 public class AndroAdsReward {
     public static MaxRewardedAd rewardedAd;
     public static boolean unlockreward = false;
-    public static MoPubRewardedAdListener rewardedAdListener;
     public static AppLovinIncentivizedInterstitial incentivizedInterstitial;
-    public static StartAppAd rewardedVideo;
     private static RewardedAd mRewardedAd;
 
     public static void LoadReward(Activity activity, String selectAds, String idReward) {
@@ -109,9 +104,6 @@ public class AndroAdsReward {
                     }
                 };
                 rewardedAd.setListener(maxRewardedAdListener);
-                break;
-            case "MOPUB":
-                MoPubRewardedAds.loadRewardedAd(idReward);
                 break;
             case "APPLOVIN-D":
                 incentivizedInterstitial = AppLovinIncentivizedInterstitial.create(idReward, AppLovinSdk.getInstance(activity));
@@ -197,9 +189,6 @@ public class AndroAdsReward {
                 };
                 rewardedAd.setListener(maxRewardedAdListener);
                 break;
-            case "MOPUB":
-                MoPubRewardedAds.loadRewardedAd(idBackupReward);
-                break;
             case "APPLOVIN-D":
                 incentivizedInterstitial = AppLovinIncentivizedInterstitial.create(idBackupReward, AppLovinSdk.getInstance(activity));
                 incentivizedInterstitial.preload(new AppLovinAdLoadListener() {
@@ -215,24 +204,39 @@ public class AndroAdsReward {
                 });
                 break;
 
-            case "STARTAPP":
-                rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
+            case "IRON":
+                IronSource.setRewardedVideoListener(new RewardedVideoListener() {
                     @Override
-                    public void onVideoCompleted() {
+                    public void onRewardedVideoAdOpened() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdClosed() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAvailabilityChanged(boolean available) {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdRewarded(Placement placement) {
                         unlockreward = true;
                     }
-                });
 
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
                     @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
+                    public void onRewardedVideoAdShowFailed(IronSourceError error) {
                     }
 
                     @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
+                    public void onRewardedVideoAdClicked(Placement placement) {
+                    }
 
+                    @Override
+                    public void onRewardedVideoAdStarted() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdEnded() {
                     }
                 });
                 break;
@@ -308,9 +312,6 @@ public class AndroAdsReward {
                         });
 
                 break;
-            case "MOPUB":
-                MoPubRewardedAds.loadRewardedAd(idBackupReward);
-                break;
             case "APPLOVIN-D":
                 incentivizedInterstitial = AppLovinIncentivizedInterstitial.create(idBackupReward, AppLovinSdk.getInstance(activity));
                 incentivizedInterstitial.preload(new AppLovinAdLoadListener() {
@@ -326,24 +327,39 @@ public class AndroAdsReward {
                 });
                 break;
 
-            case "STARTAPP":
-                rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
+            case "IRON":
+                IronSource.setRewardedVideoListener(new RewardedVideoListener() {
                     @Override
-                    public void onVideoCompleted() {
+                    public void onRewardedVideoAdOpened() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdClosed() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAvailabilityChanged(boolean available) {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdRewarded(Placement placement) {
                         unlockreward = true;
                     }
-                });
 
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
                     @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
+                    public void onRewardedVideoAdShowFailed(IronSourceError error) {
                     }
 
                     @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
+                    public void onRewardedVideoAdClicked(Placement placement) {
+                    }
 
+                    @Override
+                    public void onRewardedVideoAdStarted() {
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdEnded() {
                     }
                 });
                 break;
@@ -382,9 +398,6 @@ public class AndroAdsReward {
                         });
 
                 break;
-            case "MOPUB":
-                MoPubRewardedAds.loadRewardedAd(idBackupReward);
-                break;
             case "APPLOVIN-M":
                 rewardedAd = MaxRewardedAd.getInstance(idBackupReward, activity);
                 rewardedAd.loadAd();
@@ -437,250 +450,41 @@ public class AndroAdsReward {
                 rewardedAd.setListener(maxRewardedAdListener);
 
                 break;
-
-            case "STARTAPP":
-                rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
+            case "IRON":
+                IronSource.setRewardedVideoListener(new RewardedVideoListener() {
                     @Override
-                    public void onVideoCompleted() {
-                        unlockreward = true;
-                    }
-                });
-
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
-                    @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
+                    public void onRewardedVideoAdOpened() {
                     }
 
                     @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-                    }
-                });
-                break;
-
-        }
-    }
-
-    public static void LoadRewardMopub(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
-        MoPubRewardedAds.loadRewardedAd(idReward);
-        switch (selectBackupAds) {
-            case "ADMOB":
-                AdRequest adRequest = new AdRequest.Builder().build();
-                RewardedAd.load(activity, idBackupReward,
-                        adRequest, new RewardedAdLoadCallback() {
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mRewardedAd = null;
-                            }
-
-                            @Override
-                            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-                                mRewardedAd = rewardedAd;
-
-                            }
-                        });
-
-                break;
-            case "APPLOVIN-D":
-                incentivizedInterstitial = AppLovinIncentivizedInterstitial.create(idBackupReward, AppLovinSdk.getInstance(activity));
-                incentivizedInterstitial.preload(new AppLovinAdLoadListener() {
-                    @Override
-                    public void adReceived(AppLovinAd appLovinAd) {
-                        // A rewarded video was successfully received.
+                    public void onRewardedVideoAdClosed() {
                     }
 
                     @Override
-                    public void failedToReceiveAd(int errorCode) {
-                        // A rewarded video failed to load.
-                    }
-                });
-                break;
-            case "APPLOVIN-M":
-                rewardedAd = MaxRewardedAd.getInstance(idBackupReward, activity);
-                rewardedAd.loadAd();
-                MaxRewardedAdListener maxRewardedAdListener = new MaxRewardedAdListener() {
-                    @Override
-                    public void onRewardedVideoStarted(MaxAd ad) {
-
+                    public void onRewardedVideoAvailabilityChanged(boolean available) {
                     }
 
                     @Override
-                    public void onRewardedVideoCompleted(MaxAd ad) {
+                    public void onRewardedVideoAdRewarded(Placement placement) {
                         unlockreward = true;
                     }
 
                     @Override
-                    public void onUserRewarded(MaxAd ad, MaxReward reward) {
-
+                    public void onRewardedVideoAdShowFailed(IronSourceError error) {
                     }
 
                     @Override
-                    public void onAdLoaded(MaxAd ad) {
-
+                    public void onRewardedVideoAdClicked(Placement placement) {
                     }
 
                     @Override
-                    public void onAdDisplayed(MaxAd ad) {
-
+                    public void onRewardedVideoAdStarted() {
                     }
 
                     @Override
-                    public void onAdHidden(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdClicked(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdLoadFailed(String adUnitId, MaxError error) {
-
-                    }
-
-                    @Override
-                    public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-
-                    }
-                };
-                rewardedAd.setListener(maxRewardedAdListener);
-
-                break;
-
-            case "STARTAPP":
-                rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
-                    @Override
-                    public void onVideoCompleted() {
-                        unlockreward = true;
+                    public void onRewardedVideoAdEnded() {
                     }
                 });
-
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
-                    @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-                    }
-
-                    @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-                    }
-                });
-                break;
-
-        }
-    }
-
-    public static void LoadRewardStartApp(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
-        rewardedVideo = new StartAppAd(activity);
-        rewardedVideo.setVideoListener(new VideoListener() {
-            @Override
-            public void onVideoCompleted() {
-                unlockreward = true;
-            }
-        });
-
-        rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
-            @Override
-            public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-            }
-
-            @Override
-            public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-            }
-        });
-        switch (selectBackupAds) {
-            case "ADMOB":
-                AdRequest adRequest = new AdRequest.Builder().build();
-                RewardedAd.load(activity, idBackupReward,
-                        adRequest, new RewardedAdLoadCallback() {
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mRewardedAd = null;
-                            }
-
-                            @Override
-                            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-                                mRewardedAd = rewardedAd;
-
-                            }
-                        });
-
-                break;
-            case "APPLOVIN-D":
-                incentivizedInterstitial = AppLovinIncentivizedInterstitial.create(idBackupReward, AppLovinSdk.getInstance(activity));
-                incentivizedInterstitial.preload(new AppLovinAdLoadListener() {
-                    @Override
-                    public void adReceived(AppLovinAd appLovinAd) {
-                        // A rewarded video was successfully received.
-                    }
-
-                    @Override
-                    public void failedToReceiveAd(int errorCode) {
-                        // A rewarded video failed to load.
-                    }
-                });
-                break;
-            case "APPLOVIN-M":
-                rewardedAd = MaxRewardedAd.getInstance(idBackupReward, activity);
-                rewardedAd.loadAd();
-                MaxRewardedAdListener maxRewardedAdListener = new MaxRewardedAdListener() {
-                    @Override
-                    public void onRewardedVideoStarted(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onRewardedVideoCompleted(MaxAd ad) {
-                        unlockreward = true;
-                    }
-
-                    @Override
-                    public void onUserRewarded(MaxAd ad, MaxReward reward) {
-
-                    }
-
-                    @Override
-                    public void onAdLoaded(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdDisplayed(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdHidden(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdClicked(MaxAd ad) {
-
-                    }
-
-                    @Override
-                    public void onAdLoadFailed(String adUnitId, MaxError error) {
-
-                    }
-
-                    @Override
-                    public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-
-                    }
-                };
-                rewardedAd.setListener(maxRewardedAdListener);
-
-                break;
-            case "MOPUB":
-                MoPubRewardedAds.loadRewardedAd(idBackupReward);
                 break;
 
         }
@@ -709,47 +513,6 @@ public class AndroAdsReward {
                 } else {
                     LoadReward(activity, selectAds, idReward);
                 }
-                break;
-            case "MOPUB":
-                MoPubRewardedAds.showRewardedAd(idReward);
-                rewardedAdListener = new MoPubRewardedAdListener() {
-                    @Override
-                    public void onRewardedAdLoadSuccess(String adUnitId) {
-                        // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-                    }
-
-                    @Override
-                    public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-                        LoadReward(activity, selectAds, idReward);
-                    }
-
-                    @Override
-                    public void onRewardedAdStarted(String adUnitId) {
-                        // Called when a rewarded ad starts playing.
-                    }
-
-                    @Override
-                    public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                        //  Called when there is an error while attempting to show the ad.
-                    }
-
-                    @Override
-                    public void onRewardedAdClicked(@NonNull String adUnitId) {
-                        //  Called when a rewarded ad is clicked.
-                    }
-
-                    @Override
-                    public void onRewardedAdClosed(String adUnitId) {
-                        // Called when a rewarded ad is closed. At this point your application should resume.
-                    }
-
-                    @Override
-                    public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                        unlockreward = true;
-                        LoadReward(activity, selectAds, idReward);
-                    }
-                };
-                MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
                 break;
 
             case "APPLOVIN-D":
@@ -795,28 +558,7 @@ public class AndroAdsReward {
                     });
                 }
                 break;
-            case "STARTAPP" :
-                final StartAppAd rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
-                    @Override
-                    public void onVideoCompleted() {
-                        unlockreward = true;
-                    }
-                });
 
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
-                    @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-                    }
-
-                    @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
-
-                    }
-                });
-                rewardedVideo.showAd();
-                break;
         }
 
     }
@@ -839,45 +581,7 @@ public class AndroAdsReward {
                         rewardedAd.showAd();
                     }
                     break;
-                case "MOPUB":
-                    MoPubRewardedAds.showRewardedAd(idBackupReward);
-                    rewardedAdListener = new MoPubRewardedAdListener() {
-                        @Override
-                        public void onRewardedAdLoadSuccess(String adUnitId) {
-                            // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-                        }
 
-                        @Override
-                        public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-                        }
-
-                        @Override
-                        public void onRewardedAdStarted(String adUnitId) {
-                            // Called when a rewarded ad starts playing.
-                        }
-
-                        @Override
-                        public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                            //  Called when there is an error while attempting to show the ad.
-                        }
-
-                        @Override
-                        public void onRewardedAdClicked(@NonNull String adUnitId) {
-                            //  Called when a rewarded ad is clicked.
-                        }
-
-                        @Override
-                        public void onRewardedAdClosed(String adUnitId) {
-                            // Called when a rewarded ad is closed. At this point your application should resume.
-                        }
-
-                        @Override
-                        public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                            unlockreward = true;
-                        }
-                    };
-                    MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-                    break;
                 case "APPLOVIN-D":
                     if(incentivizedInterstitial != null){
                         // A rewarded video is available.  Call the show method with the listeners you want to use.
@@ -919,11 +623,6 @@ public class AndroAdsReward {
                                 incentivizedInterstitial.preload(null);
                             }
                         });
-                    }
-                    break;
-                case "STARTAPP" :
-                    if (rewardedVideo.isReady()){
-                        rewardedVideo.showAd();
                     }
                     break;
             }
@@ -949,45 +648,7 @@ public class AndroAdsReward {
                         });
                     }
                     break;
-                case "MOPUB":
-                    MoPubRewardedAds.showRewardedAd(idBackupReward);
-                    rewardedAdListener = new MoPubRewardedAdListener() {
-                        @Override
-                        public void onRewardedAdLoadSuccess(String adUnitId) {
-                            // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-                        }
 
-                        @Override
-                        public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-                        }
-
-                        @Override
-                        public void onRewardedAdStarted(String adUnitId) {
-                            // Called when a rewarded ad starts playing.
-                        }
-
-                        @Override
-                        public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                            //  Called when there is an error while attempting to show the ad.
-                        }
-
-                        @Override
-                        public void onRewardedAdClicked(@NonNull String adUnitId) {
-                            //  Called when a rewarded ad is clicked.
-                        }
-
-                        @Override
-                        public void onRewardedAdClosed(String adUnitId) {
-                            // Called when a rewarded ad is closed. At this point your application should resume.
-                        }
-
-                        @Override
-                        public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                            unlockreward = true;
-                        }
-                    };
-                    MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-                    break;
                 case "APPLOVIN-D":
                     if(incentivizedInterstitial != null){
                         // A rewarded video is available.  Call the show method with the listeners you want to use.
@@ -1029,11 +690,6 @@ public class AndroAdsReward {
                                 incentivizedInterstitial.preload(null);
                             }
                         });
-                    }
-                    break;
-                case "STARTAPP" :
-                    if (rewardedVideo.isReady()){
-                        rewardedVideo.showAd();
                     }
                     break;
             }
@@ -1096,274 +752,10 @@ public class AndroAdsReward {
                         });
                     }
                     break;
-                case "MOPUB":
-                    MoPubRewardedAds.showRewardedAd(idBackupReward);
-                    rewardedAdListener = new MoPubRewardedAdListener() {
-                        @Override
-                        public void onRewardedAdLoadSuccess(String adUnitId) {
-                            // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-                        }
 
-                        @Override
-                        public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-                        }
-
-                        @Override
-                        public void onRewardedAdStarted(String adUnitId) {
-                            // Called when a rewarded ad starts playing.
-                        }
-
-                        @Override
-                        public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                            //  Called when there is an error while attempting to show the ad.
-                        }
-
-                        @Override
-                        public void onRewardedAdClicked(@NonNull String adUnitId) {
-                            //  Called when a rewarded ad is clicked.
-                        }
-
-                        @Override
-                        public void onRewardedAdClosed(String adUnitId) {
-                            // Called when a rewarded ad is closed. At this point your application should resume.
-                        }
-
-                        @Override
-                        public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                            unlockreward = true;
-
-                        }
-                    };
-                    MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-                    break;
                 case "APPLOVIN-M":
                     if (rewardedAd.isReady()) {
                         rewardedAd.showAd();
-                    }
-                    break;
-                case "STARTAPP" :
-                    if (rewardedVideo.isReady()){
-                        rewardedVideo.showAd();
-                    }
-                    break;
-            }
-        }
-    }
-
-    public static void ShowRewardMopub(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
-
-        MoPubRewardedAds.showRewardedAd(idReward);
-        rewardedAdListener = new MoPubRewardedAdListener() {
-            @Override
-            public void onRewardedAdLoadSuccess(String adUnitId) {
-                // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-            }
-
-            @Override
-            public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-            }
-
-            @Override
-            public void onRewardedAdStarted(String adUnitId) {
-                // Called when a rewarded ad starts playing.
-            }
-
-            @Override
-            public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                switch (selectBackupAds) {
-                    case "ADMOB":
-                        if (mRewardedAd != null) {
-                            Activity activityContext = activity;
-                            mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
-                                @Override
-                                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                                    unlockreward = true;
-                                }
-                            });
-                        }
-                        break;
-                    case "APPLOVIN-D":
-                        if (incentivizedInterstitial != null) {
-                            // A rewarded video is available.  Call the show method with the listeners you want to use.
-                            // We will use the display listener to preload the next rewarded video when this one finishes.
-                            incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
-                                @Override
-                                public void userRewardVerified(AppLovinAd ad, Map<String, String> response) {
-                                    unlockreward = true;
-                                }
-
-                                @Override
-                                public void userOverQuota(AppLovinAd ad, Map<String, String> response) {
-
-                                }
-
-                                @Override
-                                public void userRewardRejected(AppLovinAd ad, Map<String, String> response) {
-
-                                }
-
-                                @Override
-                                public void validationRequestFailed(AppLovinAd ad, int errorCode) {
-
-                                }
-
-                                @Override
-                                public void userDeclinedToViewAd(AppLovinAd ad) {
-
-                                }
-                            }, null, new AppLovinAdDisplayListener() {
-                                @Override
-                                public void adDisplayed(AppLovinAd appLovinAd) {
-                                    // A rewarded video is being displayed.
-                                }
-
-                                @Override
-                                public void adHidden(AppLovinAd appLovinAd) {
-                                    // A rewarded video was closed.  Preload the next video now.  We won't use a load listener.
-                                    incentivizedInterstitial.preload(null);
-                                }
-                            });
-                        }
-                        break;
-                    case "APPLOVIN-M":
-                        if (rewardedAd.isReady()) {
-                            rewardedAd.showAd();
-                        }
-                        break;
-                    case "STARTAPP" :
-                        if (rewardedVideo.isReady()){
-                            rewardedVideo.showAd();
-                        }
-                        break;
-                }
-            }
-
-            @Override
-            public void onRewardedAdClicked(@NonNull String adUnitId) {
-                //  Called when a rewarded ad is clicked.
-            }
-
-            @Override
-            public void onRewardedAdClosed(String adUnitId) {
-                // Called when a rewarded ad is closed. At this point your application should resume.
-            }
-
-            @Override
-            public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                unlockreward = true;
-
-            }
-        };
-        MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-        LoadRewardMopub(activity,selectBackupAds,idReward,idBackupReward);
-
-    }
-
-    public static void ShowRewardStartApp(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
-        if (rewardedVideo.isReady()) {
-            rewardedVideo.showAd();
-            LoadRewardStartApp(activity, selectBackupAds, idReward, idBackupReward);
-        } else {
-            LoadRewardStartApp(activity, selectBackupAds, idReward, idBackupReward);
-            switch (selectBackupAds) {
-                case "APPLOVIN-M":
-                    if (rewardedAd.isReady()) {
-                        rewardedAd.showAd();
-                    }
-                    break;
-                case "MOPUB":
-                    MoPubRewardedAds.showRewardedAd(idBackupReward);
-                    rewardedAdListener = new MoPubRewardedAdListener() {
-                        @Override
-                        public void onRewardedAdLoadSuccess(String adUnitId) {
-                            // Called when the ad for the given adUnitId has loaded. At this point you should be able to call MoPubRewardedAds.showRewardedAd() to show the ad.
-                        }
-
-                        @Override
-                        public void onRewardedAdLoadFailure(String adUnitId, MoPubErrorCode errorCode) {
-                        }
-
-                        @Override
-                        public void onRewardedAdStarted(String adUnitId) {
-                            // Called when a rewarded ad starts playing.
-                        }
-
-                        @Override
-                        public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                            //  Called when there is an error while attempting to show the ad.
-                        }
-
-                        @Override
-                        public void onRewardedAdClicked(@NonNull String adUnitId) {
-                            //  Called when a rewarded ad is clicked.
-                        }
-
-                        @Override
-                        public void onRewardedAdClosed(String adUnitId) {
-                            // Called when a rewarded ad is closed. At this point your application should resume.
-                        }
-
-                        @Override
-                        public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
-                            unlockreward = true;
-
-                        }
-                    };
-                    MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-                    break;
-                case "APPLOVIN-D":
-                    if(incentivizedInterstitial != null){
-                        // A rewarded video is available.  Call the show method with the listeners you want to use.
-                        // We will use the display listener to preload the next rewarded video when this one finishes.
-                        incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
-                            @Override
-                            public void userRewardVerified(AppLovinAd ad, Map<String, String> response) {
-                                unlockreward = true;
-                            }
-
-                            @Override
-                            public void userOverQuota(AppLovinAd ad, Map<String, String> response) {
-
-                            }
-
-                            @Override
-                            public void userRewardRejected(AppLovinAd ad, Map<String, String> response) {
-
-                            }
-
-                            @Override
-                            public void validationRequestFailed(AppLovinAd ad, int errorCode) {
-
-                            }
-
-                            @Override
-                            public void userDeclinedToViewAd(AppLovinAd ad) {
-
-                            }
-                        }, null, new AppLovinAdDisplayListener() {
-                            @Override
-                            public void adDisplayed(AppLovinAd appLovinAd) {
-                                // A rewarded video is being displayed.
-                            }
-
-                            @Override
-                            public void adHidden(AppLovinAd appLovinAd) {
-                                // A rewarded video was closed.  Preload the next video now.  We won't use a load listener.
-                                incentivizedInterstitial.preload(null);
-                            }
-                        });
-                    }
-                    break;
-                case "ADMOB" :
-                    if (mRewardedAd != null) {
-                        Activity activityContext = activity;
-                        mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
-                            @Override
-                            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                                unlockreward = true;
-                                LoadRewardAdmob(activity, selectBackupAds, idReward,  idBackupReward);
-                            }
-                        });
                     }
                     break;
             }

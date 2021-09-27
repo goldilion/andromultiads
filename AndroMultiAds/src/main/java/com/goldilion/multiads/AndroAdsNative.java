@@ -30,22 +30,19 @@ import com.google.android.gms.ads.nativead.MediaView;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
 import com.google.android.gms.ads.nativead.NativeAdView;
-import com.mopub.mobileads.MoPubView;
-import com.startapp.sdk.ads.banner.Banner;
-import com.startapp.sdk.ads.banner.Mrec;
+import com.ironsource.mediationsdk.ISBannerSize;
+import com.ironsource.mediationsdk.IronSource;
+import com.ironsource.mediationsdk.IronSourceBannerLayout;
 
 public class AndroAdsNative {
     public static Bundle extras;
     public static AdRequest request;
     public static MaxAdView adViewMax;
-    public static MoPubView moPubView;
     public static AppLovinAdView adViewDiscovery;
-    public static Banner startAppBanner;
-    public static Mrec startAppMrec;
+    public static IronSourceBannerLayout adViewIron;
     private static NativeAd nativeAd;
 
-    public static void SmallNativeAdmob (Activity activity,String selectAds, String selectAdsBackup,FrameLayout layNative, String nativeId, String idBannerBackup, String Hpk1,
-                                    String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void SmallNativeAdmob (Activity activity,String selectAds, String selectAdsBackup,FrameLayout layNative, String nativeId, String idBannerBackup, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
 
         switch (selectAds) {
             case "ADMOB":
@@ -64,14 +61,9 @@ public class AndroAdsNative {
                                     adViewMax.destroy();
                                 }
                                 break;
-                            case "MOPUB":
-                                if (moPubView != null){
-                                    moPubView.destroy();
-                                }
-                                break;
-                            case "STARTAPP":
-                                if (startAppBanner != null){
-                                    startAppBanner.hideBanner();
+                            case "IRON":
+                                if (adViewIron != null) {
+                                    adViewIron.isDestroyed();
                                 }
                                 break;
                             case "APPLOVIN-D":
@@ -122,20 +114,12 @@ public class AndroAdsNative {
                                                         layNative.addView(adViewMax);
                                                         adViewMax.loadAd();
                                                         break;
-                                                    case "MOPUB":
-                                                        moPubView = new MoPubView(activity);
-                                                        moPubView.setAdUnitId(idBannerBackup);
-                                                        layNative.addView(moPubView);
-                                                        moPubView.loadAd(MoPubView.MoPubAdSize.HEIGHT_50);
-                                                        break;
-                                                    case "STARTAPP":
-                                                        startAppBanner = new Banner(activity);
-                                                        RelativeLayout.LayoutParams bannerParameters =
-                                                                new RelativeLayout.LayoutParams(
-                                                                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                                                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                                                        bannerParameters.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                                                        layNative.addView(startAppBanner, bannerParameters);
+                                                    case "IRON":
+                                                        adViewIron = IronSource.createBanner(activity, ISBannerSize.BANNER);
+                                                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                                FrameLayout.LayoutParams.WRAP_CONTENT);
+                                                        layNative.addView(adViewIron, 0, layoutParams);
+                                                        IronSource.loadBanner(adViewIron, idBannerBackup);
                                                         break;
                                                     case "APPLOVIN-D":
                                                         AdRequest.Builder builder = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)
@@ -164,21 +148,12 @@ public class AndroAdsNative {
                 layNative.addView(adViewMax);
                 adViewMax.loadAd();
                 break;
-            case "MOPUB":
-                MoPubView moPubView;
-                moPubView = new MoPubView(activity);
-                moPubView.setAdUnitId(nativeId);
-                layNative.addView(moPubView);
-                moPubView.loadAd(MoPubView.MoPubAdSize.HEIGHT_50);
-                break;
-            case "STARTAPP":
-                startAppBanner = new Banner(activity);
-                RelativeLayout.LayoutParams bannerParameters =
-                        new RelativeLayout.LayoutParams(
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT);
-                bannerParameters.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                layNative.addView(startAppBanner, bannerParameters);
+            case "IRON":
+                adViewIron = IronSource.createBanner(activity, ISBannerSize.BANNER);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT);
+                layNative.addView(adViewIron, 0, layoutParams);
+                IronSource.loadBanner(adViewIron, nativeId);
                 break;
             case "APPLOVIN-D":
                 AdRequest.Builder builder2 = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)
@@ -198,8 +173,7 @@ public class AndroAdsNative {
 
     }
 
-    public static void MediumNative(Activity activity, String selectAds, String selectAdsBackup, FrameLayout layNative, String nativeId, String idBannerBackup, String Hpk1,
-                                     String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void MediumNative(Activity activity, String selectAds, String selectAdsBackup, FrameLayout layNative, String nativeId, String idBannerBackup, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
 
         switch (selectAds) {
             case "ADMOB":
@@ -218,14 +192,9 @@ public class AndroAdsNative {
                                     adViewMax.destroy();
                                 }
                                 break;
-                            case "MOPUB":
-                                if (moPubView != null){
-                                    moPubView.destroy();
-                                }
-                                break;
-                            case "STARTAPP":
-                                if (startAppMrec != null){
-                                    startAppMrec.hideBanner();
+                            case "IRON":
+                                if (adViewIron != null) {
+                                    adViewIron.isDestroyed();
                                 }
                                 break;
                             case "APPLOVIN-D":
@@ -277,20 +246,12 @@ public class AndroAdsNative {
                                                         adViewMax.loadAd();
                                                         break;
                                                     }
-                                                    case "MOPUB":
-                                                        moPubView = new MoPubView(activity);
-                                                        moPubView.setAdUnitId(idBannerBackup);
-                                                        layNative.addView(moPubView);
-                                                        moPubView.loadAd(MoPubView.MoPubAdSize.HEIGHT_250);
-                                                        break;
-                                                    case "STARTAPP":
-                                                        startAppMrec = new Mrec(activity);
-                                                        RelativeLayout.LayoutParams bannerParameters =
-                                                                new RelativeLayout.LayoutParams(
-                                                                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                                                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                                                        bannerParameters.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                                                        layNative.addView(startAppMrec, bannerParameters);
+                                                    case "IRON":
+                                                        adViewIron = IronSource.createBanner(activity, ISBannerSize.RECTANGLE);
+                                                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                                FrameLayout.LayoutParams.WRAP_CONTENT);
+                                                        layNative.addView(adViewIron, 0, layoutParams);
+                                                        IronSource.loadBanner(adViewIron, idBannerBackup);
                                                         break;
                                                     case "APPLOVIN-D":
                                                         AdRequest.Builder builder = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)
@@ -319,20 +280,12 @@ public class AndroAdsNative {
                 layNative.addView(adViewMax);
                 adViewMax.loadAd();
                 break;
-            case "MOPUB":
-                moPubView = new MoPubView(activity);
-                moPubView.setAdUnitId(nativeId);
-                layNative.addView(moPubView);
-                moPubView.loadAd(MoPubView.MoPubAdSize.HEIGHT_250);
-                break;
-            case "STARTAPP":
-                startAppMrec = new Mrec(activity);
-                RelativeLayout.LayoutParams bannerParameters =
-                        new RelativeLayout.LayoutParams(
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT);
-                bannerParameters.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                layNative.addView(startAppMrec, bannerParameters);
+            case "IRON":
+                adViewIron = IronSource.createBanner(activity, ISBannerSize.RECTANGLE);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT);
+                layNative.addView(adViewIron, 0, layoutParams);
+                IronSource.loadBanner(adViewIron, nativeId);
                 break;
             case "APPLOVIN-D":
                 AdRequest.Builder builder2 = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)

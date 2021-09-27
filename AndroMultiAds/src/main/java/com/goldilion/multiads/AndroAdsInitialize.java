@@ -9,11 +9,8 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.mopub.common.MoPub;
-import com.mopub.common.SdkConfiguration;
-import com.mopub.common.SdkInitializationListener;
-import com.startapp.sdk.adsbase.StartAppAd;
-import com.startapp.sdk.adsbase.StartAppSDK;
+import com.ironsource.mediationsdk.IronSource;
+import com.ironsource.mediationsdk.integration.IntegrationHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,16 +40,10 @@ public class AndroAdsInitialize {
                 sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
 
                 break;
-            case "MOPUB":
-                Map<String, String> facebookBanner = new HashMap<>();
-                facebookBanner.put("native_banner", "true");
-                SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
-                //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-                MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
-                break;
-            case "STARTAPP":
-                StartAppSDK.init(activity, idInitialize, true);
-                StartAppAd.disableSplash();
+            case "IRON":
+                IronSource.init(activity, idInitialize);
+                IntegrationHelper.validateIntegration(activity);
+                IronSource.setMetaData("Facebook_IS_CacheFlag", "IMAGE");
                 break;
             case "APPLOVIN-D":
                 AppLovinSdk.initializeSdk(activity);
@@ -80,20 +71,9 @@ public class AndroAdsInitialize {
                 AppLovinSdk sdk = AppLovinSdk.getInstance(activity);
                 sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
                 break;
-            case "MOPUB":
-                Map<String, String> facebookBanner = new HashMap<>();
-                facebookBanner.put("native_banner", "true");
-                SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
-                //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-                MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
-                break;
-            case "STARTAPP":
-                StartAppSDK.init(activity, idInitialize, true);
-                StartAppAd.disableSplash();
-                StartAppSDK.setUserConsent(activity,
-                        "pas",
-                        System.currentTimeMillis(),
-                        true);
+            case "IRON":
+                IronSource.init(activity, idInitialize);
+                IntegrationHelper.validateIntegration(activity);
                 break;
             case "APPLOVIN-D" :
                 AppLovinSdk.initializeSdk(activity);
@@ -110,20 +90,9 @@ public class AndroAdsInitialize {
                 AppLovinSdk sdk = AppLovinSdk.getInstance(activity);
                 sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
                 break;
-            case "MOPUB":
-                Map<String, String> facebookBanner = new HashMap<>();
-                facebookBanner.put("native_banner", "true");
-                SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
-                //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-                MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
-                break;
-            case "STARTAPP":
-                StartAppSDK.init(activity, idInitialize, true);
-                StartAppAd.disableSplash();
-                StartAppSDK.setUserConsent(activity,
-                        "pas",
-                        System.currentTimeMillis(),
-                        true);
+            case "IRON":
+                IronSource.init(activity, idInitialize);
+                IntegrationHelper.validateIntegration(activity);
                 break;
             case "ADMOB" :
                 MobileAds.initialize(activity, new OnInitializationCompleteListener() {
@@ -151,20 +120,9 @@ public class AndroAdsInitialize {
             case "APPLOVIN-D":
                 AppLovinSdk.initializeSdk(activity);
                 break;
-            case "MOPUB":
-                Map<String, String> facebookBanner = new HashMap<>();
-                facebookBanner.put("native_banner", "true");
-                SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
-                //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-                MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
-                break;
-            case "STARTAPP":
-                StartAppSDK.init(activity, idInitialize, true);
-                StartAppAd.disableSplash();
-                StartAppSDK.setUserConsent(activity,
-                        "pas",
-                        System.currentTimeMillis(),
-                        true);
+            case "IRON":
+                IronSource.init(activity, idInitialize);
+                IntegrationHelper.validateIntegration(activity);
                 break;
             case "ADMOB" :
                 MobileAds.initialize(activity, new OnInitializationCompleteListener() {
@@ -183,12 +141,9 @@ public class AndroAdsInitialize {
         }
     }
 
-    public static void SelectAdsMopub(Activity activity, String selectAdsBackup, String idInitialize, String idInitializeBackupAds) {
-        //Map<String, String> facebookBanner = new HashMap<>();
-        //facebookBanner.put("native_banner", "true");
-        SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitialize);
-        //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-        MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
+    public static void SelectAdsIron(Activity activity, String selectAdsBackup, String idInitialize, String idInitializeBackupAds) {
+        IronSource.init(activity, idInitialize);
+        IntegrationHelper.validateIntegration(activity);
         switch (selectAdsBackup) {
             case "APPLOVIN-D":
                 AppLovinSdk.initializeSdk(activity);
@@ -199,15 +154,7 @@ public class AndroAdsInitialize {
                 AppLovinSdk sdk = AppLovinSdk.getInstance(activity);
                 sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
                 break;
-            case "STARTAPP":
-                StartAppSDK.init(activity,idInitializeBackupAds, true);
-                StartAppAd.disableSplash();
-                StartAppSDK.setUserConsent(activity,
-                        "pas",
-                        System.currentTimeMillis(),
-                        true);
-                break;
-            case "ADMOB" :
+            case "ADMOB":
                 MobileAds.initialize(activity, new OnInitializationCompleteListener() {
                     @Override
                     public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -222,55 +169,6 @@ public class AndroAdsInitialize {
                 });
                 break;
         }
-    }
-
-    public static void SelectAdsStartApp(Activity activity, String selectAdsBackup, String idInitialize,String idInitializeBackupAds) {
-        StartAppSDK.init(activity, idInitialize, true);
-        StartAppAd.disableSplash();
-        StartAppSDK.setUserConsent(activity,
-                "pas",
-                System.currentTimeMillis(),
-                true);
-        switch (selectAdsBackup) {
-            case "APPLOVIN-D":
-                AppLovinSdk.initializeSdk(activity);
-                break;
-            case "APPLOVIN-M":
-                //AdSettings.setDataProcessingOptions(new String[]{});
-                AppLovinSdk.getInstance(activity).setMediationProvider(AppLovinMediationProvider.MAX);
-                AppLovinSdk sdk = AppLovinSdk.getInstance(activity);
-                sdk.getSettings().setMuted(!sdk.getSettings().isMuted());
-                break;
-            case "MOPUB":
-                //Map<String, String> facebookBanner = new HashMap<>();
-                //facebookBanner.put("native_banner", "true");
-                SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder(idInitializeBackupAds);
-                //configBuilder.withMediatedNetworkConfiguration(FacebookBanner.class.getName(), facebookBanner);
-                MoPub.initializeSdk(activity, configBuilder.build(), initSdkListener());
-                break;
-            case "ADMOB" :
-                MobileAds.initialize(activity, new OnInitializationCompleteListener() {
-                    @Override
-                    public void onInitializationComplete(InitializationStatus initializationStatus) {
-                        Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
-                        for (String adapterClass : statusMap.keySet()) {
-                            AdapterStatus status = statusMap.get(adapterClass);
-                            Log.d("MyApp", String.format(
-                                    "Adapter name: %s, Description: %s, Latency: %d",
-                                    adapterClass, status.getDescription(), status.getLatency()));
-                        }
-                    }
-                });
-                break;
-        }
-    }
-
-    private static SdkInitializationListener initSdkListener() {
-        return new SdkInitializationListener() {
-            @Override
-            public void onInitializationFinished() {
-            }
-        };
     }
 
 }
