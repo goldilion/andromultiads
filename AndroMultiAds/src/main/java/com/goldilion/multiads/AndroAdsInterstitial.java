@@ -37,8 +37,7 @@ public class AndroAdsInterstitial {
     public static AppLovinAd loadedAd;
     private static StartAppAd startAppAd;
 
-    public static void LoadInterstitial(Activity activity, String selectAds, String idInterstitial, String Hpk1,
-                                       String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void LoadInterstitial(Activity activity, String selectAds, String idInterstitial, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         switch (selectAds) {
             case "ADMOB":
                 Bundle extras = new AppLovinExtras.Builder()
@@ -104,8 +103,7 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void LoadInterstitialAdmob(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, String Hpk1,
-                                            String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void LoadInterstitialAdmob(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         Bundle extras = new AppLovinExtras.Builder()
                 .setMuteAudio(true)
                 .build();
@@ -170,8 +168,7 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void LoadInterstitialApplovinDis(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup
-    ) {
+    public static void LoadInterstitialApplovinDis(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup) {
 
         AdRequest.Builder builder = new AdRequest.Builder();
         Bundle interstitialExtras = new Bundle();
@@ -235,8 +232,70 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void LoadInterstitialApplovinMax(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup)
-    {
+    public static void LoadInterstitialApplovinDisHPK(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, String HPK1, String HPK2, String HPK3, String HPK4, String HPK5) {
+
+        AdRequest.Builder builder = new AdRequest.Builder().addKeyword(HPK1).addKeyword(HPK2).addKeyword(HPK3).addKeyword(HPK4).addKeyword(HPK5);;
+        Bundle interstitialExtras = new Bundle();
+        interstitialExtras.putString("zone_id", idInterstitial);
+        builder.addCustomEventExtrasBundle(AppLovinCustomEventInterstitial.class, interstitialExtras);
+
+        AppLovinSdk.getInstance(activity).getAdService().loadNextAd(AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener() {
+            @Override
+            public void adReceived(AppLovinAd ad) {
+                loadedAd = ad;
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode) {
+                // Look at AppLovinErrorCodes.java for list of error codes.
+            }
+        });
+        interstitialAdlovin = AppLovinInterstitialAd.create(AppLovinSdk.getInstance(activity), activity);
+
+        switch (selectAdsBackup) {
+            case "APPLOVIN-M":
+                if (idInterstitialBackup.equals("")) {
+                    interstitialAd = new MaxInterstitialAd("qwerty12345", activity);
+                    interstitialAd.loadAd();
+                } else {
+                    interstitialAd = new MaxInterstitialAd(idInterstitialBackup, activity);
+                    interstitialAd.loadAd();
+                }
+
+                break;
+            case "MOPUB":
+                mInterstitial = new MoPubInterstitial(activity, idInterstitialBackup);
+                mInterstitial.load();
+                break;
+            case "ADMOB":
+                Bundle extras = new AppLovinExtras.Builder()
+                        .setMuteAudio(true)
+                        .build();
+                AdRequest request = new AdRequest.Builder()
+                        .addNetworkExtrasBundle(ApplovinAdapter.class, extras)
+                        .build();
+                InterstitialAd.load(activity, idInterstitialBackup, request,
+                        new InterstitialAdLoadCallback() {
+                            @Override
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                // The mInterstitialAd reference will be null until
+                                // an ad is loaded.
+                                mInterstitialAd = interstitialAd;
+                                Log.i(TAG, "onAdLoaded");
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                // Handle the error
+                                Log.i(TAG, loadAdError.getMessage());
+                                mInterstitialAd = null;
+                            }
+                        });
+                break;
+        }
+    }
+
+    public static void LoadInterstitialApplovinMax(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup) {
 
         interstitialAd = new MaxInterstitialAd(idInterstitial, activity);
         interstitialAd.loadAd();
@@ -293,16 +352,15 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void LoadInterstitialMopub(Activity activity, String selectAdsBackup, String idIntertitial, String idIntertitialBackup)
-    {
+    public static void LoadInterstitialMopub(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup) {
 
-        mInterstitial = new MoPubInterstitial(activity, idIntertitial);
+        mInterstitial = new MoPubInterstitial(activity, idInterstitial);
         mInterstitial.load();
         switch (selectAdsBackup) {
             case "APPLOVIN-D":
                 AdRequest.Builder builder = new AdRequest.Builder();
                 Bundle interstitialExtras = new Bundle();
-                interstitialExtras.putString("zone_id", idIntertitialBackup);
+                interstitialExtras.putString("zone_id", idInterstitialBackup);
                 builder.addCustomEventExtrasBundle(AppLovinCustomEventInterstitial.class, interstitialExtras);
                 AppLovinSdk.getInstance(activity).getAdService().loadNextAd(AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener() {
                     @Override
@@ -318,7 +376,7 @@ public class AndroAdsInterstitial {
                 interstitialAdlovin = AppLovinInterstitialAd.create(AppLovinSdk.getInstance(activity), activity);
                 break;
             case "APPLOVIN-M":
-                interstitialAd = new MaxInterstitialAd(idIntertitialBackup, activity);
+                interstitialAd = new MaxInterstitialAd(idInterstitialBackup, activity);
                 interstitialAd.loadAd();
                 break;
             case "ADMOB":
@@ -328,7 +386,7 @@ public class AndroAdsInterstitial {
                 AdRequest request = new AdRequest.Builder()
                         .addNetworkExtrasBundle(ApplovinAdapter.class, extras)
                         .build();
-                InterstitialAd.load(activity, idIntertitialBackup, request,
+                InterstitialAd.load(activity, idInterstitialBackup, request,
                         new InterstitialAdLoadCallback() {
                             @Override
                             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -350,7 +408,7 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void LoadInterstitialStartApp(Activity activity, String selectAdsBackup, String idIntertitial, String idIntertitialBackup)
+    public static void LoadInterstitialStartApp(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup)
     {
         startAppAd = new StartAppAd(activity);
         startAppAd.loadAd (new AdEventListener() {
@@ -366,7 +424,7 @@ public class AndroAdsInterstitial {
             case "APPLOVIN-D":
                 AdRequest.Builder builder = new AdRequest.Builder();
                 Bundle interstitialExtras = new Bundle();
-                interstitialExtras.putString("zone_id", idIntertitialBackup);
+                interstitialExtras.putString("zone_id", idInterstitialBackup);
                 builder.addCustomEventExtrasBundle(AppLovinCustomEventInterstitial.class, interstitialExtras);
                 AppLovinSdk.getInstance(activity).getAdService().loadNextAd(AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener() {
                     @Override
@@ -382,7 +440,7 @@ public class AndroAdsInterstitial {
                 interstitialAdlovin = AppLovinInterstitialAd.create(AppLovinSdk.getInstance(activity), activity);
                 break;
             case "APPLOVIN-M":
-                interstitialAd = new MaxInterstitialAd(idIntertitialBackup, activity);
+                interstitialAd = new MaxInterstitialAd(idInterstitialBackup, activity);
                 interstitialAd.loadAd();
                 break;
             case "ADMOB":
@@ -392,7 +450,7 @@ public class AndroAdsInterstitial {
                 AdRequest request = new AdRequest.Builder()
                         .addNetworkExtrasBundle(ApplovinAdapter.class, extras)
                         .build();
-                InterstitialAd.load(activity, idIntertitialBackup, request,
+                InterstitialAd.load(activity, idInterstitialBackup, request,
                         new InterstitialAdLoadCallback() {
                             @Override
                             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -411,15 +469,14 @@ public class AndroAdsInterstitial {
                         });
                 break;
             case "MOPUB" :
-                mInterstitial = new MoPubInterstitial(activity, idIntertitial);
+                mInterstitial = new MoPubInterstitial(activity, idInterstitial);
                 mInterstitial.load();
                 break;
 
         }
     }
 
-    public static void ShowInterstitial(Activity activity, String selectAds, String idInterstitial, int interval,String Hpk1,
-                                       String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void ShowInterstitial(Activity activity, String selectAds, String idInterstitial, int interval, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         if (counter >= interval) {
             switch (selectAds) {
                 case "ADMOB":
@@ -459,8 +516,7 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void ShowInterstitialAdmob(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup,
-                                             int interval, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
+    public static void ShowInterstitialAdmob(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval, String Hpk1, String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         if (counter >= interval) {
 
             if (mInterstitialAd != null) {
@@ -502,8 +558,7 @@ public class AndroAdsInterstitial {
         }
     }
 
-    public static void ShowInterstitialApplovinDis(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup,
-                                                  int interval) {
+    public static void ShowInterstitialApplovinDis(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval) {
         if (counter >= interval) {
             if (interstitialAdlovin != null) {
                 AppLovinAdDisplayListener listener = new AppLovinAdDisplayListener() {
@@ -555,8 +610,59 @@ public class AndroAdsInterstitial {
 
     }
 
-    public static void ShowInterstitialApplovinMax(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup,
-                                                  int interval) {
+    public static void ShowInterstitialApplovinDisHPK(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval,String HPK1, String HPK2, String HPK3, String HPK4, String HPK5) {
+        if (counter >= interval) {
+            if (interstitialAdlovin != null) {
+                AppLovinAdDisplayListener listener = new AppLovinAdDisplayListener() {
+                    @Override
+                    public void adDisplayed(AppLovinAd ad) {
+
+                    }
+
+                    @Override
+                    public void adHidden(AppLovinAd ad) {
+                        switch (selectAdsBackup) {
+                            case "APPLOVIN-M":
+                                if (interstitialAd.isReady()) {
+                                    interstitialAd.showAd();
+                                    interstitialAd.loadAd();
+                                } else {
+                                    interstitialAd.loadAd();
+                                }
+                                break;
+                            case "MOPUB":
+                                if (mInterstitial.isReady()) {
+                                    mInterstitial.show();
+                                    mInterstitial.load();
+                                } else {
+                                    mInterstitial.load();
+                                }
+                                break;
+                            case "STARTAPP":
+                                StartAppAd.showAd(activity);
+                                break;
+                            case "ADMOB":
+                                if (mInterstitialAd != null) {
+                                    mInterstitialAd.show(activity);
+                                }
+                                break;
+                        }
+                        LoadInterstitialApplovinDisHPK(activity, selectAdsBackup, idInterstitial, idInterstitialBackup, HPK1, HPK2, HPK3, HPK4, HPK5);
+                    }
+                };
+                interstitialAdlovin.setAdDisplayListener(listener);
+                interstitialAdlovin.showAndRender(loadedAd);
+                LoadInterstitialApplovinDisHPK(activity, selectAdsBackup, idInterstitial, idInterstitialBackup, HPK1, HPK2, HPK3, HPK4, HPK5);
+            }
+
+            counter = 0;
+        } else {
+            counter++;
+        }
+
+    }
+
+    public static void ShowInterstitialApplovinMax(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval) {
         if (counter >= interval) {
             if (interstitialAd.isReady()) {
                 interstitialAd.showAd();
@@ -593,11 +699,9 @@ public class AndroAdsInterstitial {
         } else {
             counter++;
         }
-
     }
 
-    public static void ShowInterstitialMopub(Activity activity, String selectAdsBackup, String idIntertitial, String idIntertitialBackup,
-                                            int interval) {
+    public static void ShowInterstitialMopub(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval) {
         if (counter >= interval) {
             if (mInterstitial.isReady()) {
                 mInterstitial.show();
@@ -623,7 +727,7 @@ public class AndroAdsInterstitial {
                         break;
                 }
             }
-            LoadInterstitialMopub(activity, selectAdsBackup, idIntertitial, idIntertitialBackup);
+            LoadInterstitialMopub(activity, selectAdsBackup, idInterstitial, idInterstitialBackup);
             counter = 0;
         } else {
             counter++;
@@ -631,8 +735,7 @@ public class AndroAdsInterstitial {
 
     }
 
-    public static void ShowInterstitialStartApp(Activity activity, String selectAdsBackup, String idIntertitial, String idIntertitialBackup,
-                                              int interval) {
+    public static void ShowInterstitialStartApp(Activity activity, String selectAdsBackup, String idInterstitial, String idInterstitialBackup, int interval) {
         if (counter >= interval) {
             startAppAd.showAd();
             startAppAd.showAd(new AdDisplayListener() {
@@ -672,7 +775,7 @@ public class AndroAdsInterstitial {
                 }
             });
 
-            LoadInterstitialStartApp(activity, selectAdsBackup, idIntertitial, idIntertitialBackup);
+            LoadInterstitialStartApp(activity, selectAdsBackup, idInterstitial, idInterstitialBackup);
             counter = 0;
         } else {
             counter++;

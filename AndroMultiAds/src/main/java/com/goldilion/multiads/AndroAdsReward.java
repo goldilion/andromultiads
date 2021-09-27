@@ -33,13 +33,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class AndroAdsReward {
-    private static RewardedAd mRewardedAd;
     public static MaxRewardedAd rewardedAd;
     public static boolean unlockreward = false;
     public static MoPubRewardedAdListener rewardedAdListener;
     public static AppLovinIncentivizedInterstitial incentivizedInterstitial;
     public static StartAppAd rewardedVideo;
-
+    private static RewardedAd mRewardedAd;
 
     public static void LoadReward(Activity activity, String selectAds, String idReward) {
         switch (selectAds) {
@@ -754,7 +753,7 @@ public class AndroAdsReward {
                 break;
 
             case "APPLOVIN-D":
-                if(incentivizedInterstitial.isAdReadyToDisplay()){
+                if(incentivizedInterstitial != null) {
                     // A rewarded video is available.  Call the show method with the listeners you want to use.
                     // We will use the display listener to preload the next rewarded video when this one finishes.
                     incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -822,19 +821,19 @@ public class AndroAdsReward {
 
     }
 
-    public static void ShowRewardAdmob(Activity activity, String selecBackuptAds, String idReward, String idBackupReward) {
+    public static void ShowRewardAdmob(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
         if (mRewardedAd != null) {
             Activity activityContext = activity;
             mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
                 @Override
                 public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                     unlockreward = true;
-                    LoadRewardAdmob(activity, selecBackuptAds, idReward,  idBackupReward);
+                    LoadRewardAdmob(activity, selectBackupAds, idReward, idBackupReward);
                 }
             });
         } else {
-            LoadRewardAdmob(activity, selecBackuptAds, idReward,  idBackupReward);
-            switch (selecBackuptAds) {
+            LoadRewardAdmob(activity, selectBackupAds, idReward, idBackupReward);
+            switch (selectBackupAds) {
                 case "APPLOVIN-M":
                     if (rewardedAd.isReady()) {
                         rewardedAd.showAd();
@@ -875,13 +874,12 @@ public class AndroAdsReward {
                         @Override
                         public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
                             unlockreward = true;
-
                         }
                     };
                     MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
                     break;
                 case "APPLOVIN-D":
-                    if(incentivizedInterstitial.isAdReadyToDisplay()){
+                    if(incentivizedInterstitial != null){
                         // A rewarded video is available.  Call the show method with the listeners you want to use.
                         // We will use the display listener to preload the next rewarded video when this one finishes.
                         incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -924,7 +922,6 @@ public class AndroAdsReward {
                     }
                     break;
                 case "STARTAPP" :
-
                     if (rewardedVideo.isReady()){
                         rewardedVideo.showAd();
                     }
@@ -933,14 +930,14 @@ public class AndroAdsReward {
         }
     }
 
-    public static void ShowRewardApplovinMax(Activity activity, String selecBackuptAds, String idReward, String idBackupReward) {
+    public static void ShowRewardApplovinMax(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
 
         if (rewardedAd.isReady()) {
             rewardedAd.showAd();
-            LoadRewardApplovinMax(activity,selecBackuptAds,idReward,idBackupReward);
+            LoadRewardApplovinMax(activity, selectBackupAds, idReward, idBackupReward);
         } else {
-            LoadRewardApplovinMax(activity,selecBackuptAds,idReward,idBackupReward);
-            switch (selecBackuptAds) {
+            LoadRewardApplovinMax(activity, selectBackupAds, idReward, idBackupReward);
+            switch (selectBackupAds) {
                 case "ADMOB":
                     if (mRewardedAd != null) {
                         Activity activityContext = activity;
@@ -987,13 +984,12 @@ public class AndroAdsReward {
                         @Override
                         public void onRewardedAdCompleted(Set<String> adUnitIds, MoPubReward reward) {
                             unlockreward = true;
-
                         }
                     };
                     MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
                     break;
                 case "APPLOVIN-D":
-                    if(incentivizedInterstitial.isAdReadyToDisplay()){
+                    if(incentivizedInterstitial != null){
                         // A rewarded video is available.  Call the show method with the listeners you want to use.
                         // We will use the display listener to preload the next rewarded video when this one finishes.
                         incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -1044,8 +1040,8 @@ public class AndroAdsReward {
         }
     }
 
-    public static void ShowRewardApplovinDis(Activity activity, String selecBackupAds, String idReward, String idBackupReward) {
-        if (incentivizedInterstitial.isAdReadyToDisplay()) {
+    public static void ShowRewardApplovinDis(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
+        if (incentivizedInterstitial != null) {
             // A rewarded video is available.  Call the show method with the listeners you want to use.
             // We will use the display listener to preload the next rewarded video when this one finishes.
             incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -1085,10 +1081,10 @@ public class AndroAdsReward {
                     incentivizedInterstitial.preload(null);
                 }
             });
-            LoadRewardApplovinDis(activity,selecBackupAds,idReward,idBackupReward);
+            LoadRewardApplovinDis(activity, selectBackupAds, idReward, idBackupReward);
         } else {
-            LoadRewardApplovinDis(activity,selecBackupAds,idReward,idBackupReward);
-            switch (selecBackupAds) {
+            LoadRewardApplovinDis(activity, selectBackupAds, idReward, idBackupReward);
+            switch (selectBackupAds) {
                 case "ADMOB":
                     if (mRewardedAd != null) {
                         Activity activityContext = activity;
@@ -1154,7 +1150,7 @@ public class AndroAdsReward {
         }
     }
 
-    public static void ShowRewardMopub(Activity activity, String selecBackuptAds, String idReward, String idBackupReward) {
+    public static void ShowRewardMopub(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
 
         MoPubRewardedAds.showRewardedAd(idReward);
         rewardedAdListener = new MoPubRewardedAdListener() {
@@ -1174,7 +1170,7 @@ public class AndroAdsReward {
 
             @Override
             public void onRewardedAdShowError(String adUnitId, MoPubErrorCode errorCode) {
-                switch (selecBackuptAds) {
+                switch (selectBackupAds) {
                     case "ADMOB":
                         if (mRewardedAd != null) {
                             Activity activityContext = activity;
@@ -1187,7 +1183,7 @@ public class AndroAdsReward {
                         }
                         break;
                     case "APPLOVIN-D":
-                        if (incentivizedInterstitial.isAdReadyToDisplay()) {
+                        if (incentivizedInterstitial != null) {
                             // A rewarded video is available.  Call the show method with the listeners you want to use.
                             // We will use the display listener to preload the next rewarded video when this one finishes.
                             incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -1259,17 +1255,17 @@ public class AndroAdsReward {
             }
         };
         MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
-        LoadRewardMopub(activity,selecBackuptAds,idReward,idBackupReward);
+        LoadRewardMopub(activity,selectBackupAds,idReward,idBackupReward);
 
     }
 
-    public static void ShowRewardStartApp(Activity activity, String selecBackuptAds, String idReward, String idBackupReward) {
+    public static void ShowRewardStartApp(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
         if (rewardedVideo.isReady()) {
             rewardedVideo.showAd();
-            LoadRewardStartApp(activity, selecBackuptAds, idReward,  idBackupReward);
+            LoadRewardStartApp(activity, selectBackupAds, idReward, idBackupReward);
         } else {
-            LoadRewardStartApp(activity, selecBackuptAds, idReward,  idBackupReward);
-            switch (selecBackuptAds) {
+            LoadRewardStartApp(activity, selectBackupAds, idReward, idBackupReward);
+            switch (selectBackupAds) {
                 case "APPLOVIN-M":
                     if (rewardedAd.isReady()) {
                         rewardedAd.showAd();
@@ -1316,7 +1312,7 @@ public class AndroAdsReward {
                     MoPubRewardedAds.setRewardedAdListener(rewardedAdListener);
                     break;
                 case "APPLOVIN-D":
-                    if(incentivizedInterstitial.isAdReadyToDisplay()){
+                    if(incentivizedInterstitial != null){
                         // A rewarded video is available.  Call the show method with the listeners you want to use.
                         // We will use the display listener to preload the next rewarded video when this one finishes.
                         incentivizedInterstitial.show(activity, new AppLovinAdRewardListener() {
@@ -1365,7 +1361,7 @@ public class AndroAdsReward {
                             @Override
                             public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                                 unlockreward = true;
-                                LoadRewardAdmob(activity, selecBackuptAds, idReward,  idBackupReward);
+                                LoadRewardAdmob(activity, selectBackupAds, idReward,  idBackupReward);
                             }
                         });
                     }

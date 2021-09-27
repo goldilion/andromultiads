@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout layAds = findViewById(R.id.layAds);
         FrameLayout nativeads = findViewById(R.id.laynative);
         RelativeLayout layAdsmall = findViewById(R.id.laysAdsmall);
-        AndroGDPR.loadGdpr(MainActivity.this,SELECT_ADS,true);
+        AndroGDPR.loadGdpr(MainActivity.this, SELECT_ADS, true);
 
         switch (SELECT_ADS) {
             case "ADMOB":

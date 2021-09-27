@@ -43,7 +43,7 @@ public class AndroAdsBanner {
     public static Banner startAppBanner;
     public static Mrec startAppMrec;
     public static void SmallBanner(Activity activity, RelativeLayout layAds, String selectAds, String idBanner, String Hpk1,
-                                   String Hpk2, String Hpk3, String Hpk4, String Hpk5 ) {
+                                   String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         switch (selectAds) {
             case "ADMOB":
                 Bundle extras = new AppLovinExtras.Builder()
@@ -62,15 +62,10 @@ public class AndroAdsBanner {
                 break;
 
             case "APPLOVIN-M":
-                /*MaxAdView adView2;
-                adView2 = new MaxAdView(idBanner, activity);*/
                 adViewMax = new MaxAdView(idBanner, activity);
                 adViewMax.stopAutoRefresh();
                 final boolean isTablet = AppLovinSdkUtils.isTablet(activity);
                 final int heightPx = AppLovinSdkUtils.dpToPx(activity, isTablet ? 90 : 50);
-                /*adView2.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heightPx));
-                layAds.addView(adView2);
-                adView2.loadAd();*/
                 adViewMax.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heightPx));
                 layAds.addView(adViewMax);
                 adViewMax.loadAd();
@@ -96,10 +91,10 @@ public class AndroAdsBanner {
                 AdRequest.Builder builder = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)
                         .addKeyword(Hpk3).addKeyword(Hpk4).addKeyword(Hpk5);
                 Bundle bannerExtras = new Bundle();
-                bannerExtras.putString( "zone_id", idBanner );
-                builder.addCustomEventExtrasBundle( AppLovinCustomEventBanner.class, bannerExtras );
+                bannerExtras.putString("zone_id", idBanner);
+                builder.addCustomEventExtrasBundle(AppLovinCustomEventBanner.class, bannerExtras);
 
-                boolean isTablet3 = AppLovinSdkUtils.isTablet( activity );
+                boolean isTablet3 = AppLovinSdkUtils.isTablet(activity);
                 AppLovinAdSize adSize3 = isTablet3 ? AppLovinAdSize.LEADER : AppLovinAdSize.BANNER;
                 adViewDiscovery = new AppLovinAdView(adSize3, activity);
                 layAds.addView(adViewDiscovery);
@@ -111,7 +106,7 @@ public class AndroAdsBanner {
     }
 
     public static void SmallBannerAdmob(Activity activity, RelativeLayout layAds, String selectAdsBackup, String idBanner, String idBannerBackup,String Hpk1,
-                                        String Hpk2, String Hpk3, String Hpk4, String Hpk5 ) {
+                                        String Hpk2, String Hpk3, String Hpk4, String Hpk5) {
         Bundle extras = new AppLovinExtras.Builder()
                 .setMuteAudio(true)
                 .build();
@@ -131,22 +126,22 @@ public class AndroAdsBanner {
                 // Code to be executed when an ad finishes loading.
                 switch (selectAdsBackup) {
                     case "APPLOVIN-M":
-                        if (adViewMax!=null){
+                        if (adViewMax != null) {
                             adViewMax.destroy();
                         }
                         break;
                     case "MOPUB":
-                        if (moPubView!=null){
+                        if (moPubView != null) {
                             moPubView.destroy();
                         }
                         break;
                     case "STARTAPP":
-                        if (startAppBanner!=null){
+                        if (startAppBanner != null) {
                             startAppBanner.hideBanner();
                         }
                         break;
                     case "APPLOVIN-D":
-                        if (adViewDiscovery!=null){
+                        if (adViewDiscovery != null) {
                             adViewDiscovery.destroy();
                         }
                         break;
@@ -184,10 +179,10 @@ public class AndroAdsBanner {
                         AdRequest.Builder builder = new AdRequest.Builder().addKeyword(Hpk1).addKeyword(Hpk2)
                                 .addKeyword(Hpk3).addKeyword(Hpk4).addKeyword(Hpk5);
                         Bundle bannerExtras = new Bundle();
-                        bannerExtras.putString( "zone_id", idBannerBackup );
-                        builder.addCustomEventExtrasBundle( AppLovinCustomEventBanner.class, bannerExtras );
+                        bannerExtras.putString("zone_id", idBannerBackup);
+                        builder.addCustomEventExtrasBundle(AppLovinCustomEventBanner.class, bannerExtras);
 
-                        boolean isTablet2 = AppLovinSdkUtils.isTablet( activity );
+                        boolean isTablet2 = AppLovinSdkUtils.isTablet(activity);
                         AppLovinAdSize adSize = isTablet2 ? AppLovinAdSize.LEADER : AppLovinAdSize.BANNER;
                         adViewDiscovery = new AppLovinAdView(adSize, activity);
                         layAds.addView(adViewDiscovery);
@@ -231,22 +226,22 @@ public class AndroAdsBanner {
             public void adReceived(AppLovinAd ad) {
                 switch (selectAdsBackup) {
                     case "APPLOVIN-M":
-                        if (adViewMax!=null){
+                        if (adViewMax != null) {
                             adViewMax.destroy();
                         }
                         break;
                     case "MOPUB":
-                        if (moPubView!=null){
+                        if (moPubView != null) {
                             moPubView.destroy();
                         }
                         break;
                     case "STARTAPP":
-                        if (startAppBanner!=null){
+                        if (startAppBanner != null) {
                             startAppBanner.hideBanner();
                         }
                         break;
                     case "ADMOB":
-                        if (adViewAdmob!=null){
+                        if (adViewAdmob != null) {
                             adViewAdmob.destroy();
                         }
                         break;
@@ -323,22 +318,22 @@ public class AndroAdsBanner {
             public void onAdLoaded(MaxAd ad) {
                 switch (selectAdsBackup) {
                     case "APPLOVIN-D":
-                        if (adViewDiscovery!=null){
+                        if (adViewDiscovery != null) {
                             adViewDiscovery.destroy();
                         }
                         break;
                     case "MOPUB":
-                        if (moPubView!=null){
+                        if (moPubView != null) {
                             moPubView.destroy();
                         }
                         break;
                     case "STARTAPP":
-                        if (startAppBanner!=null){
+                        if (startAppBanner != null) {
                             startAppBanner.hideBanner();
                         }
                         break;
                     case "ADMOB":
-                        if (adViewAdmob!=null){
+                        if (adViewAdmob != null) {
                             adViewAdmob.destroy();
                         }
                         break;
@@ -430,22 +425,22 @@ public class AndroAdsBanner {
             public void onBannerLoaded(@NonNull MoPubView moPubView) {
                 switch (selectAdsBackup) {
                     case "APPLOVIN-D":
-                        if (adViewDiscovery!=null){
+                        if (adViewDiscovery != null) {
                             adViewDiscovery.destroy();
                         }
                         break;
                     case "APPLOVIN-M":
-                        if (adViewMax!=null){
+                        if (adViewMax != null) {
                             adViewMax.destroy();
                         }
                         break;
                     case "STARTAPP":
-                        if (startAppBanner!=null){
+                        if (startAppBanner != null) {
                             startAppBanner.hideBanner();
                         }
                         break;
                     case "ADMOB":
-                        if (adViewAdmob!=null){
+                        if (adViewAdmob != null) {
                             adViewAdmob.destroy();
                         }
                         break;
@@ -528,22 +523,22 @@ public class AndroAdsBanner {
             public void onReceiveAd(View view) {
                 switch (selectAdsBackup) {
                     case "APPLOVIN-D":
-                        if (adViewDiscovery!=null){
+                        if (adViewDiscovery != null) {
                             adViewDiscovery.destroy();
                         }
                         break;
                     case "APPLOVIN-M":
-                        if (adViewMax!=null){
+                        if (adViewMax != null) {
                             adViewMax.destroy();
                         }
                         break;
                     case "MOPUB":
-                        if (moPubView!=null){
+                        if (moPubView != null) {
                             moPubView.destroy();
                         }
                         break;
                     case "ADMOB":
-                        if (adViewAdmob!=null){
+                        if (adViewAdmob != null) {
                             adViewAdmob.destroy();
                         }
                         break;
@@ -757,7 +752,6 @@ public class AndroAdsBanner {
         });
 
     }
-
 
     private static AdSize getAdSize(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
