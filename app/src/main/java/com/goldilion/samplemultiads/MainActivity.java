@@ -3,16 +3,20 @@ package com.goldilion.samplemultiads;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_BANNER;
 import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_INTERSTITIAL;
+import static com.goldilion.samplemultiads.SettingAds.BACKUP_ADS_REWARDS;
 import static com.goldilion.samplemultiads.SettingAds.HPK1;
 import static com.goldilion.samplemultiads.SettingAds.HPK2;
 import static com.goldilion.samplemultiads.SettingAds.HPK3;
 import static com.goldilion.samplemultiads.SettingAds.HPK4;
 import static com.goldilion.samplemultiads.SettingAds.HPK5;
+import static com.goldilion.samplemultiads.SettingAds.INITIALIZE_SDK;
 import static com.goldilion.samplemultiads.SettingAds.INTERVAL;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_BANNER;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_INTERSTITIAL;
 import static com.goldilion.samplemultiads.SettingAds.MAIN_ADS_REWARDS;
+import static com.goldilion.samplemultiads.SettingAds.NATIVE_ADS_ADMOB;
 import static com.goldilion.samplemultiads.SettingAds.SELECT_ADS;
+import static com.goldilion.samplemultiads.SettingAds.INITIALIZE_SDK_BACKUPADS;
 
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (SELECT_ADS) {
             case "ADMOB":
+                AndroAdsInitialize.SelectAdsAdmob(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK_BACKUPADS);
                 AndroAdsBanner.SmallBannerAdmob(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER, HPK1
                         ,HPK2,HPK3,HPK4,HPK5);
                 AndroAdsInterstitial.LoadInterstitialAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, HPK1
@@ -58,11 +63,31 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsBanner.SmallBannerApplovinDis(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsInterstitial.LoadInterstitialApplovinDis(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
                 break;
-            case "MOPUB" :
-                AndroAdsBanner.SmallBannerMopub(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
-                break;
             case "STARTAPP":
                 AndroAdsBanner.SmallBannerStartApp(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                break;
+            case "IRON":
+                AndroAdsInitialize.SelectAdsIron(MainActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
+                AndroAdsBanner.SmallBannerIron(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialIron(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
+                break;
+            case "FACEBOOK":
+                AndroAdsInitialize.SelectAdsFAN(MainActivity.this,SELECT_ADS,INITIALIZE_SDK_BACKUPADS);
+                AndroAdsBanner.SmallBannerFAN(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialFAN(MainActivity.this,BACKUP_ADS,MAIN_ADS_INTERSTITIAL,BACKUP_ADS_INTERSTITIAL);
+                break;
+            case "GOOGLE-ADS":
+                AndroAdsInitialize.SelectAdsGoogleAds(MainActivity.this,BACKUP_ADS,INITIALIZE_SDK_BACKUPADS);
+                AndroAdsBanner.SmallBannerGoogleAds(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialGoogleAds(MainActivity.this,BACKUP_ADS,MAIN_ADS_INTERSTITIAL,BACKUP_ADS_INTERSTITIAL);
+                AndroAdsReward.LoadRewardGoogleAds(MainActivity.this,BACKUP_ADS,MAIN_ADS_REWARDS,BACKUP_ADS_REWARDS);
+                AndroAdsNative.MediumNativeGoogleAds(MainActivity.this,SELECT_ADS, BACKUP_ADS,nativeads,NATIVE_ADS_ADMOB,BACKUP_ADS_BANNER);
+                break;
+            case "UNITY":
+                AndroAdsInitialize.SelectAdsUnity(MainActivity.this,BACKUP_ADS,INITIALIZE_SDK,INITIALIZE_SDK_BACKUPADS);
+                AndroAdsBanner.SmallBannerUnity(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
+                AndroAdsInterstitial.LoadInterstitialUnity(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL);
+                AndroAdsReward.LoadRewardUnity(MainActivity.this,BACKUP_ADS,MAIN_ADS_REWARDS,BACKUP_ADS_REWARDS);
                 break;
         }
     }
@@ -79,13 +104,44 @@ public class MainActivity extends AppCompatActivity {
             case "APPLOVIN-M":
                 AndroAdsInterstitial.ShowInterstitialApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
                 break;
+            case "IRON" :
+                AndroAdsInterstitial.ShowInterstitialIron(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
+            case "STARTAPP" :
+                AndroAdsInterstitial.ShowInterstitialStartApp(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
+            case "FACEBOOK" :
+                AndroAdsInterstitial.ShowInterstitialFAN(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
+            case "GOOGLE-ADS" :
+                AndroAdsInterstitial.ShowInterstitialGoogleAds(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
+            case "UNITY" :
+                AndroAdsInterstitial.ShowInterstitialUnity(MainActivity.this, BACKUP_ADS, MAIN_ADS_INTERSTITIAL, BACKUP_ADS_INTERSTITIAL, INTERVAL);
+                break;
         }
-
     }
 
     public void showreward(View view){
-        AndroAdsReward.ShowReward(MainActivity.this,SELECT_ADS,MAIN_ADS_REWARDS);
+        switch (SELECT_ADS) {
+            case "ADMOB":
+                AndroAdsReward.ShowRewardAdmob(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "APPLOVIN-M":
+                AndroAdsReward.ShowRewardApplovinMax(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "MOPUB":
+                AndroAdsReward.ShowRewardMopub(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "GOOGLE-ADS":
+                AndroAdsReward.ShowRewardGoogleAds(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
+            case "UNITY":
+                AndroAdsReward.ShowRewardUnity(MainActivity.this, BACKUP_ADS, MAIN_ADS_REWARDS, BACKUP_ADS_REWARDS);
+                break;
 
+
+        }
     }
 
     public void onResume(){

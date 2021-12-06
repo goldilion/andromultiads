@@ -38,9 +38,15 @@ public class SplashActivity extends AppCompatActivity {
             case "STARTAPP":
                 AndroAdsInitialize.SelectAdsStartApp(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK,INITIALIZE_SDK_BACKUPADS);
                 break;
+            case "GOOGLE-ADS":
+                AndroAdsInitialize.SelectAdsAdmob(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK);
+                break;
+            case "IRON":
+                AndroAdsInitialize.SelectAdsIron(SplashActivity.this, BACKUP_ADS, INITIALIZE_SDK, INITIALIZE_SDK_BACKUPADS);
+                break;
         }
-
         AndroAdsOpenAds.LoadOpenAds(SettingAds.OPEN_ADS_ADMOB);
+
         new CountDownTimer(10000, 1000) {
                 @Override
                 public void onFinish() {
