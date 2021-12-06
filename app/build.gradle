@@ -3,10 +3,11 @@ plugins {
 }
 apply plugin: 'applovin-quality-service'
 applovin {
-    apiKey "BTHzUGBR7VmnKqaSVnHC1pnkDtHOTADT0TOZHBTIOwE-7DmhSQTJ_Vn7W08PoVGI_J4WH5QAGWZiz4WQ6HKc2v"
+    apiKey "hnTO1n8SlUqFUKaCWs1FT8CFAuT0NbEgQSkB4dbeC7mrybMVib-NEycrc3ATSO16RbTw9UCdpJN_q4PbL1oP2U"
 }
 android {
     compileSdkVersion 31
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.goldilion.samplemultiads"
@@ -25,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
