@@ -4,10 +4,10 @@ public class SettingAds {
     public static String SELECT_ADS ="STARTAPP";
     public static String BACKUP_ADS = "APPLOVIN-D";
 
-    public static String MAIN_ADS_BANNER ="ca-app-pub-3940256099942544/6300978111x";
+    public static String MAIN_ADS_BANNER ="ca-app-pub-3940256099942544/6300978111";
     public static String BACKUP_ADS_BANNER="DefaultBanner";
 
-    public static String MAIN_ADS_INTERSTITIAL ="ca-app-pub-3940256099942544/1033173712x";
+    public static String MAIN_ADS_INTERSTITIAL ="ca-app-pub-3940256099942544/1033173712";
     public static String BACKUP_ADS_INTERSTITIAL="DefaultInterstitial";
 
     public static String MAIN_ADS_REWARDS ="DefaultRewardedVideo";
