@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 AndroAdsBanner.SmallBannerGoogleAds(MainActivity.this, layAds, BACKUP_ADS, MAIN_ADS_BANNER, BACKUP_ADS_BANNER);
                 AndroAdsInterstitial.LoadInterstitialGoogleAds(MainActivity.this,BACKUP_ADS,MAIN_ADS_INTERSTITIAL,BACKUP_ADS_INTERSTITIAL);
                 AndroAdsReward.LoadRewardGoogleAds(MainActivity.this,BACKUP_ADS,MAIN_ADS_REWARDS,BACKUP_ADS_REWARDS);
-                AndroAdsNative.MediumNativeGoogleAds(MainActivity.this,SELECT_ADS, BACKUP_ADS,nativeads,NATIVE_ADS_ADMOB,BACKUP_ADS_BANNER);
+                //AndroAdsNative.MediumNativeGoogleAds(MainActivity.this,SELECT_ADS, BACKUP_ADS,nativeads,NATIVE_ADS_ADMOB,BACKUP_ADS_BANNER);
                 break;
             case "UNITY":
                 AndroAdsInitialize.SelectAdsUnity(MainActivity.this,BACKUP_ADS,INITIALIZE_SDK,INITIALIZE_SDK_BACKUPADS);

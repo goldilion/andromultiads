@@ -8,6 +8,7 @@ import com.applovin.sdk.AppLovinPrivacySettings;
 import com.applovin.sdk.AppLovinSdk;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.ads.mediation.applovin.AppLovinMediationAdapter;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -18,10 +19,10 @@ import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.StartAppSDK;
 import com.unity3d.ads.UnityAds;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AndroAdsInitialize {
+
     public static void SelectAdsAdmob(Activity activity, String selectAdsBackup, String idInitialize) {
         MobileAds.initialize(activity, new OnInitializationCompleteListener() {
             @Override
@@ -33,7 +34,8 @@ public class AndroAdsInitialize {
                             "Adapter name: %s, Description: %s, Latency: %d",
                             adapterClass, status.getDescription(), status.getLatency()));
                     AppLovinPrivacySettings.setHasUserConsent(true, activity);
-
+                    AppLovinPrivacySettings.setIsAgeRestrictedUser(true, activity);
+                    AppLovinSdk.getInstance("sdkKey", AppLovinMediationAdapter.getSdkSettings(activity), activity).initializeSdk();
                 }
             }
         });

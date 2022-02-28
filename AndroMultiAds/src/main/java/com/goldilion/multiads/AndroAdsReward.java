@@ -38,7 +38,6 @@ import com.unity3d.ads.IUnityAdsListener;
 import com.unity3d.ads.UnityAds;
 
 import java.util.Map;
-import java.util.Set;
 
 public class AndroAdsReward {
     public static MaxRewardedAd rewardedAd;
@@ -289,10 +288,7 @@ public class AndroAdsReward {
 
                                 }
 
-                                @Override
-                                public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                                }
                             }, null, new AppLovinAdDisplayListener() {
                                 @Override
                                 public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1073,10 +1069,7 @@ public class AndroAdsReward {
 
                                 }
 
-                                @Override
-                                public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                                }
                             }, null, new AppLovinAdDisplayListener() {
                                 @Override
                                 public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1487,10 +1480,7 @@ public class AndroAdsReward {
 
                             }
 
-                            @Override
-                            public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                            }
                         }, null, new AppLovinAdDisplayListener() {
                             @Override
                             public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1569,10 +1559,7 @@ public class AndroAdsReward {
 
                             }
 
-                            @Override
-                            public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                            }
                         }, null, new AppLovinAdDisplayListener() {
                             @Override
                             public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1652,10 +1639,7 @@ public class AndroAdsReward {
 
                             }
 
-                            @Override
-                            public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                            }
                         }, null, new AppLovinAdDisplayListener() {
                             @Override
                             public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1712,10 +1696,7 @@ public class AndroAdsReward {
 
                 }
 
-                @Override
-                public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                }
             }, null, new AppLovinAdDisplayListener() {
                 @Override
                 public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1824,10 +1805,7 @@ public class AndroAdsReward {
 
                             }
 
-                            @Override
-                            public void userDeclinedToViewAd(AppLovinAd ad) {
 
-                            }
                         }, null, new AppLovinAdDisplayListener() {
                             @Override
                             public void adDisplayed(AppLovinAd appLovinAd) {
@@ -1866,6 +1844,4 @@ public class AndroAdsReward {
             }
         }
     }
-
-
 }
